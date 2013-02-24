@@ -26,6 +26,10 @@ gallery:
   url: /gallery/
   param: { module: content, action: gallery }
 
+book_appointment:
+  url: /book-appointment/
+  param: { module: content, action: bookAppointment }
+
 gallery_page:
   url:   /gallery/:page
   param: { module: content, action: gallery }

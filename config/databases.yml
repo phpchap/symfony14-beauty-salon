@@ -4,7 +4,7 @@ prod:
     param:
       dsn: 'mysql:host=localhost;dbname=bbs'
       username: root
-      password: pa55w0rd
+      password: password
 
 dev:
   doctrine:

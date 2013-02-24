@@ -11,7 +11,7 @@
         </div>
         <div class="yui-ge">
             <!-- SPECIAL OFFERS CONTAINER -->
-            <div class="yui-u first">
+            <div class="gallery_container yui-u first">
                 <?php $offer_counter = 1; ?>
                 <?php foreach ($offers as $offer) {  ?>
                     <div class="<?php echo ($offer_counter == 1 )?"offer_first":"offer"; ?>">
