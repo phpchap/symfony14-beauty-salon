@@ -1,4 +1,4 @@
-<?php
+1<?php
 
 /**
  * Frontend content controller
