@@ -14,9 +14,9 @@ all:
   salon_latitude: '53.381708'
   salon_longitude: '-6.591582'
   # facebook settings
-  facebook_app_id:  'xxxxxxx'
-  facebook_secret:  'xxxxxxx'
-  facebook_api_key: 'xxxxxxx'
+  facebook_app_id:  '154182314654218'
+  facebook_secret:  '300c979b69cc2ffaac86141ff38e7e32'
+  facebook_api_key: '154182314654218'
   facebook_page_id: '131424670248995'
   # google maps api key
   gmaps_api_key: 'xxxxxxx'
