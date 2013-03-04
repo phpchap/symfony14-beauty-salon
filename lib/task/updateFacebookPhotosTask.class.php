@@ -3,11 +3,16 @@
 class updateFacebookPhotosTask extends sfBaseTask {
 
     protected function configure() {
+        // // add your own arguments here
+        // $this->addArguments(array(
+        //   new sfCommandArgument('my_arg', sfCommandArgument::REQUIRED, 'My argument'),
+        // ));
 
         $this->addOptions(array(
             new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
             new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
             new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
+                // add your own options here
         ));
 
         $this->namespace = 'facebook';
@@ -26,39 +31,38 @@ EOF;
         $databaseManager = new sfDatabaseManager($this->configuration);
         $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
+        /*
+          // Create our Application instance (replace this with your appId and secret).
+          $this->facebook = new Facebook(array(
+          'appId' => sfConfig::get('app_facebook_app_id'),
+          'secret' => sfConfig::get('app_facebook_secret'),
+          ));
 
-$facebook = new Facebook(array(
-    'appId' => sfConfig::get('app_facebook_app_id'),
-    'secret' => sfConfig::get('app_facebook_secret'),
-));
+          // get the access token
+          $at             = $this->facebook->getAccessToken();
+          $fql            = urlencode('/131424670248995/albums');
 
+          // run the query
+          $photoQuery     = urlencode('/131424670248995/albums');
+          $photoFQL       = 'https://api.facebook.com/method/fql.query?query='.$photoQuery .'&access_token='.$at.'&format=json';
+          $albums         = json_decode( file_get_contents ( $photoFQL ) ) ;
 
-// Get User ID
-$user = $facebook->getUser();        
+          $response = $this->facebook->api(array(
+          'method' => 'fql.query',
+          'query' => $fql,
+          ));
 
-var_dump($user);
-
-die;
-
-if ($user) {
-  try {
-    // Proceed knowing you have a logged in user who's authenticated.
-    $user_profile = $facebook->api('/me');
-  } catch (FacebookApiException $e) {
-    print_r($e);
-    $user = null;
-  }
-}
-
-
-
-        die;
+          print_r($response);
+          die;
+         */
         // initialise the facebook SDK object
         $this->facebook = new Facebook(array(
-                    'appId' => sfConfig::get('app_facebook_app_id'),
-                    'secret' => sfConfig::get('app_facebook_secret'),
-                    'cookie' => true));
+            'appId' => sfConfig::get('app_facebook_app_id'),
+            'secret' => sfConfig::get('app_facebook_secret'),
+            'cookie' => true));
 
+        $this->facebook->getAccessToken();
+        
         // get the current number of albums
         $current_album_count = FacebookAlbumTable::getAlbumCount();
 
@@ -69,19 +73,19 @@ if ($user) {
             $facebook_album = FacebookAlbumTable::getAlbumByFbId($album['id']);
             // album does not exist yet.. 
             if ($facebook_album == false) {
-                // create new fb album
+                echo "<br/>Album :: ".$album['id']." does not exist - create! \n";
                 $facebook_album = new FacebookAlbum();
                 $facebook_album->setFields($album);
                 $facebook_album->save();
                 // now fetch the photos in the album
-                // echo "<br/>Facebook Album :: ".$album['id']." Added! \n";												
+                echo "<br/>Facebook Album :: ".$album['id']." Added! \n";												
             } else {
-                // echo "<br/>Album :: ".$album['id']." does exist - check photo count! \n";				
+                echo "<br/>Album :: ".$album['id']." does exist - check photo count! \n";				
             }
             $this->getAlbumPhotos($facebook_album->getFbId(), $facebook_album->getId());
         }
-        // echo "<br/>".$album['id']." does exist - check photo count! \n";
-        // echo "<br/>All done!";		
+        echo "<br/>".$album['id']." does exist - check photo count! \n";
+        echo "<br/>All done!";		
     }
 
     public function getAlbumPhotos($fb_album_id, $id) {
@@ -97,7 +101,7 @@ if ($user) {
                 $album_photo['fb_album_id'] = $id;
                 $facebook_photo->setFields($album_photo);
                 $facebook_photo->save();
-                // echo "Facebook Photo : ".$facebook_photo->getFbId()." Added!\n";
+//				echo "Facebook Photo : ".$facebook_photo->getFbId()." Added!\n";
             }
         }
     }
