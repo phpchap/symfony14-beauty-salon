@@ -37,7 +37,8 @@ EOF;
             'appId' => sfConfig::get('app_facebook_app_id'),
             'secret' => sfConfig::get('app_facebook_secret'),
             'cookie' => true));
-
+        
+        $this->accessToken = null;
         $this->facebook->getAccessToken();
         
         // get the current number of albums
