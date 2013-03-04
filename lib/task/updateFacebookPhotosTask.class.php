@@ -26,35 +26,12 @@ php symfony updateFacebookPhotos
 EOF;
     }
 
-    protected function execute($arguments = array(), $options = array()) {
+    protected function execute($arguments = array(), $options = array()) 
+    {
         // initialize the database connection
         $databaseManager = new sfDatabaseManager($this->configuration);
         $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
-        /*
-          // Create our Application instance (replace this with your appId and secret).
-          $this->facebook = new Facebook(array(
-          'appId' => sfConfig::get('app_facebook_app_id'),
-          'secret' => sfConfig::get('app_facebook_secret'),
-          ));
-
-          // get the access token
-          $at             = $this->facebook->getAccessToken();
-          $fql            = urlencode('/131424670248995/albums');
-
-          // run the query
-          $photoQuery     = urlencode('/131424670248995/albums');
-          $photoFQL       = 'https://api.facebook.com/method/fql.query?query='.$photoQuery .'&access_token='.$at.'&format=json';
-          $albums         = json_decode( file_get_contents ( $photoFQL ) ) ;
-
-          $response = $this->facebook->api(array(
-          'method' => 'fql.query',
-          'query' => $fql,
-          ));
-
-          print_r($response);
-          die;
-         */
         // initialise the facebook SDK object
         $this->facebook = new Facebook(array(
             'appId' => sfConfig::get('app_facebook_app_id'),
