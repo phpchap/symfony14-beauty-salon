@@ -47,9 +47,13 @@ class contentActions extends sfActions {
         chdir(sfConfig::get('sf_root_dir'));
 
         // define and run the task
-        $task = new updateFacebookPhotosTask($this->dispatcher,
-                        new sfFormatter());
-        $task->run();
+        $task = new updateFacebookPhotosTask(
+                $this->dispatcher,
+                new sfFormatter());
+        
+        $task->run(array(), array('application' => 'frontend',
+                                  'env' => 'prod',
+                                  'connection' => 'doctrine'));
     }
 
     /**
